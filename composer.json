@@ -2,6 +2,7 @@
   "name": "dxi/doctrine-enum",
   "type": "library",
   "description": "DXI Doctrine Enum DBAL / ODM Type support",
+  "licence": "MIT",
   "authors": [
     {
       "name": "Daniel Bojdo",
