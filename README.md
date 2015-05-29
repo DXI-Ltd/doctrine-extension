@@ -26,7 +26,7 @@ class MyEnum extends \MabeEnum\Enum
 ```
 
 *  Register your type with DBAL
-```
+```php
 use Dxi\DoctrineEnum\DBAL\DBALTypeRegistrar;
 use Dxi\DoctrineEnum\DBAL\DBALTypeClassGenerator;
 
@@ -39,7 +39,7 @@ $registrar->registerType('my_enum_type', '\MyEnum');
 Now you can use "my_enum_type" with for Doctrine ORM mappings and with DBAL bindings.
 
 *  Register your type with MongoDB
-```
+```php
 use Dxi\DoctrineEnum\DBAL\DBALTypeRegistrar;
 use Dxi\DoctrineEnum\DBAL\DBALTypeClassGenerator;
 
