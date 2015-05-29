@@ -24,18 +24,17 @@ class DBALTypeClassGeneratorTest extends \PHPUnit_Framework_TestCase
      */
     public function shouldGenerateEnumTypeClass()
     {
-        $type = 'dxi.my_type';
+        $typeName = 'dxi.my_type';
         $namespace = 'Dxi\DoctrineEnum\\__DBALType';
         $dir = sys_get_temp_dir() . '/' . md5(mt_rand(0, 100000).time());
         $generator = new DBALTypeClassGenerator($dir, $namespace);
 
-        $className = $generator->generateDBALTypeClass($type, 'Dxi\DoctrineEnum\Tests\DBAL\MyEnum');
+        list($className, $file) = $generator->generateTypeClass($typeName, 'Dxi\DoctrineEnum\Tests\DBAL\MyEnum');
+        $this->assertFileExists($file);
         $this->assertEquals('Dxi\DoctrineEnum\\__DBALType\\DxiDoctrineEnumTestsDBALMyEnum', $className);
+        require $file;
 
-        Type::addType($type, $className);
-        $objType = Type::getType($type);
-
-        $this->assertInstanceOf($className, $objType);
+        $this->assertTrue(class_exists($className));
     }
 }
 

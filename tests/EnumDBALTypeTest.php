@@ -71,14 +71,6 @@ class EnumDBALTypeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Dxi\DoctrineEnum\EnumDBALType
-     */
-    private function getEnumType()
-    {
-        return $this->getMockForAbstractClass('Dxi\DoctrineEnum\EnumDBALType');
-    }
-
-    /**
      * @return \PHPUnit_Framework_MockObject_MockObject|\Doctrine\DBAL\Platforms\AbstractPlatform
      */
     private function createPlatform()
@@ -103,7 +95,7 @@ class DxiDoctrineEnumTestsDBALMyEnum extends \Dxi\DoctrineEnum\EnumDBALType
         return 'dxi.my_type_test';
     }
 
-    protected static function getEnumClass()
+    protected function getEnumClass()
     {
         return 'Dxi\DoctrineEnum\Tests\MyEnum';
     }

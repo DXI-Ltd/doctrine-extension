@@ -9,82 +9,46 @@
 
 namespace Dxi\DoctrineEnum\DBAL;
 
+use Dxi\DoctrineEnum\Common\AbstractTypeGenerator;
+
 /**
  * Class DBALTypeClassGenerator
  * @package Dxi\DoctrineEnum\DBAL
  */
-class DBALTypeClassGenerator
+class DBALTypeClassGenerator extends AbstractTypeGenerator
 {
-    /**
-     * @var string
-     */
-    private $typesDir;
-
-    /**
-     * @var string
-     */
-    private $typesNamespace;
-
     private static $template = <<<EOD
 <?php
 namespace %s;
 
 class %s extends \Dxi\DoctrineEnum\EnumDBALType
 {
+    /**
+     * @return string
+     */
     public function getName()
     {
         return '%s';
     }
 
-    protected static function getEnumClass()
+    /**
+     * @return string
+     */
+    protected function getEnumClass()
     {
         return '%s';
     }
 }
 EOD;
 
-    public function __construct($typesDir, $typesNamespace = 'Dxi\DoctrineEnum\__DBALType__')
-    {
-        $this->typesDir = $typesDir;
-        $this->typesNamespace = $typesNamespace;
-    }
-
     /**
-     * @param string $typeName
+     * @param string $className
      * @param string $enumClass
+     * @param $typeName
      * @return string
      */
-    public function generateDBALTypeClass($typeName, $enumClass)
+    protected function generateClassCode($className, $enumClass, $typeName)
     {
-        $className = $this->getClassName($enumClass);
-        $dbalTypeClass = $this->typesNamespace .'\\'.$className;
-
-        if (class_exists($dbalTypeClass, true)) {
-            return $dbalTypeClass;
-        }
-
-        $filename = $this->typesDir .'/'. $className .'.php';
-
-        if (! is_file($filename)) {
-            if (! is_dir($this->typesDir)) {
-                @mkdir($this->typesDir, 755, true);
-            }
-
-            $typeCode = sprintf(self::$template, $this->typesNamespace, $className, $typeName, $enumClass);
-            file_put_contents($filename, $typeCode);
-        }
-
-        require $filename;
-
-        return $dbalTypeClass;
-    }
-
-    /**
-     * @param $enumClass
-     * @return string
-     */
-    private function getClassName($enumClass)
-    {
-        return preg_replace('/\\\\/', '', $enumClass);
+        return sprintf(self::$template, $this->typesNamespace, $className, $typeName, $enumClass);
     }
 }

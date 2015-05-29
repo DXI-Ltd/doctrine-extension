@@ -10,14 +10,15 @@
 namespace Dxi\DoctrineEnum\Tests\DBAL;
 
 use Doctrine\DBAL\Types\Type;
-use Dxi\DoctrineEnum\DBAL\DBALTypeLoader;
+use Dxi\DoctrineEnum\DBAL\DBALTypeClassGenerator;
+use Dxi\DoctrineEnum\DBAL\DBALTypeRegistrar;
 use MabeEnum\Enum;
 
 /**
  * Class DBALTypeLoader
  * @package Dxi\DoctrineEnum\Tests\DBAL
  */
-class DBALTypeLoaderTest extends \PHPUnit_Framework_TestCase
+class DBALTypeRegistrarTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
@@ -25,15 +26,10 @@ class DBALTypeLoaderTest extends \PHPUnit_Framework_TestCase
     public function shouldLoadEnumType()
     {
         $typeName = 'dxi.my_enum_type';
-        $enumClass = 'Dxi\DoctrineEnum\Tests\DBAL\MyNewEnum';
 
-        $generator = $this->createGenerator();
-        $generator->expects($this->once())
-            ->method('generateDBALTypeClass')
-            ->with($this->equalTo($typeName), $this->equalTo($enumClass))
-            ->willReturn('Dxi\DoctrineEnum\Tests\DBAL\DxiDoctrineEnumTestsDBALMyEnum');
+        $generator = new DBALTypeClassGenerator(sys_get_temp_dir() .'/'. md5(mt_rand().time()), 'Dxi\DoctrineEnum\Tests\DBAL');
 
-        $loader = new DBALTypeLoader($generator);
+        $loader = new DBALTypeRegistrar($generator);
         $loader->registerType($typeName, 'Dxi\DoctrineEnum\Tests\DBAL\MyNewEnum');
 
         Type::getType($typeName);
@@ -50,9 +46,9 @@ class DBALTypeLoaderTest extends \PHPUnit_Framework_TestCase
 
         $generator = $this->createGenerator();
         $generator->expects($this->never())
-            ->method('generateDBALTypeClass');
+            ->method('generateTypeClass');
 
-        $loader = new DBALTypeLoader($generator);
+        $loader = new DBALTypeRegistrar($generator);
         $loader->registerType($typeName, $enumClass);
     }
 
@@ -68,17 +64,4 @@ class DBALTypeLoaderTest extends \PHPUnit_Framework_TestCase
 class MyNewEnum extends Enum {
     const ONE = 'one';
     const TWO = 'two';
-}
-
-class DxiDoctrineEnumTestsDBALMyEnum extends \Dxi\DoctrineEnum\EnumDBALType
-{
-    public function getName()
-    {
-        return 'dxi.my_enum_type';
-    }
-
-    protected static function getEnumClass()
-    {
-        return 'Dxi\DoctrineEnum\Tests\DBAL\MyNewEnum';
-    }
 }

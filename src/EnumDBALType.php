@@ -11,6 +11,7 @@ namespace Dxi\DoctrineEnum;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
+use Dxi\DoctrineEnum\Exception\InvalidEnumValueException;
 use MabeEnum\Enum;
 
 /**
@@ -19,7 +20,10 @@ use MabeEnum\Enum;
  */
 abstract class EnumDBALType extends Type
 {
-    abstract static protected function getEnumClass();
+    /**
+     * @return string
+     */
+    abstract protected function getEnumClass();
 
     /**
      * Gets the SQL declaration snippet for a field of this type.
@@ -48,6 +52,10 @@ abstract class EnumDBALType extends Type
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
+        if ($value == null) {
+            return null;
+        }
+
         if (! ($value instanceof Enum)) {
             $value = $this->getEnum($value);
         }
@@ -66,7 +74,7 @@ abstract class EnumDBALType extends Type
      */
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
-        return $this->getEnum($value);
+        return $value == null ? null : $this->getEnum($value);
     }
 
     /**
@@ -75,6 +83,10 @@ abstract class EnumDBALType extends Type
      */
     private function getEnum($value)
     {
-        return call_user_func(sprintf('%s::get', static::getEnumClass()), $value);
+        try {
+            return call_user_func(sprintf('%s::get', $this->getEnumClass()), $value);
+        } catch (\Exception $e) {
+            throw new InvalidEnumValueException(sprintf('Enum with value "%s" can not be found.', $value));
+        }
     }
 }
