@@ -2,6 +2,7 @@
   "name": "dxi/doctrine-enum",
   "type": "library",
   "description": "DXI Doctrine Enum DBAL / ODM Type support",
+  "keywords": ["enum", "doctrine", "mapping", "orm", "odm", "php-enum"],
   "licence": "MIT",
   "authors": [
     {
