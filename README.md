@@ -28,7 +28,7 @@ class MyEnum extends \MabeEnum\Enum
 }
 ```
 
-* Define your Entity
+* Define your Entity or Document
 ```php
 class MyEntity
 {
