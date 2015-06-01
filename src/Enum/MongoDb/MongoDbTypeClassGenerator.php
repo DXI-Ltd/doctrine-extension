@@ -26,7 +26,7 @@ class %s extends \Dxi\DoctrineExtension\Enum\EnumMongoDbType
     /**
      * @return string
      */
-    protected static function getEnumClass()
+    protected function getEnumClass()
     {
         return '%s';
     }
