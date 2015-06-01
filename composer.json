@@ -1,42 +1,42 @@
 {
-  "name": "dxi/doctrine-extension",
-  "type": "library",
-  "description": "DXI Doctrine Extensions",
-  "keywords": ["enum", "doctrine", "mapping", "orm", "odm", "php-enum"],
-  "licence": "MIT",
-  "authors": [
-    {
-      "name": "Daniel Bojdo",
-      "email": "daniel.bojdo@dxi.eu"
+    "name": "dxi/doctrine-extension",
+    "type": "library",
+    "description": "DXI Doctrine Extensions",
+    "keywords": ["enum", "doctrine", "mapping", "orm", "odm", "php-enum"],
+    "licence": "MIT",
+    "authors": [
+        {
+            "name": "Daniel Bojdo",
+            "email": "daniel.bojdo@dxi.eu"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "require-dev": {
+        "doctrine/dbal": "~2.3",
+        "gedmo/doctrine-extensions": "~2.3",
+        "doctrine/orm": "~2.3",
+        "doctrine/mongodb-odm": "~1.0",
+        "marc-mabe/php-enum": "~2.0",
+        "phpunit/phpunit": "~4@stable"
+    },
+    "autoload": {
+        "psr-4": {
+          "Dxi\\DoctrineExtension\\": "src/"
+        }
+    },
+    "suggest": {
+        "marc-mabe/php-enum": "To support Enum Extension",
+        "gedmo/doctrine-extensions:": "To support Reference Extension",
+        "doctrine/dbal": "To support DBAL Type",
+        "doctrine/mongodb-odm": "To support MongoDB ODM Type"
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
     }
-  ],
-  "require": {
-    "php": ">=5.3.3"
-  },
-  "require-dev": {
-    "doctrine/dbal": "~2.4",
-    "gedmo/doctrine-extensions": "~2.4",
-    "doctrine/orm": "~2.4",
-    "doctrine/mongodb-odm": "~1.0",
-    "marc-mabe/php-enum": "~2.0",
-    "phpunit/phpunit": "~4@stable"
-  },
-  "autoload": {
-    "psr-4": {
-      "Dxi\\DoctrineExtension\\": "src/"
-    }
-  },
-  "suggest": {
-    "marc-mabe/php-enum": "To support Enum Extension",
-    "gedmo/doctrine-extensions:": "To support Reference Extension",
-    "doctrine/dbal": "To support DBAL Type",
-    "doctrine/mongodb-odm": "To support MongoDB ODM Type"
-  },
-  "prefer-stable": true,
-  "minimum-stability": "dev",
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  }
 }

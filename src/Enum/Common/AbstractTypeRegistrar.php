@@ -44,7 +44,7 @@ abstract class AbstractTypeRegistrar
     public function registerType($typeName, $enumClass)
     {
         if (! class_exists($enumClass, true)) {
-            throw new InvalidEnumClassException('Given enum class "%s" doesn\'t exist or can not be auto-loaded.');
+            throw new InvalidEnumClassException(sprintf('Given enum class "%s" doesn\'t exist or can not be auto-loaded.', $enumClass));
         }
 
         list($typeClass, $file) = $this->generator->generateTypeClass($typeName, $enumClass);
