@@ -7,7 +7,7 @@
  * Copyright (C) DXI Ltd
  */
 
-namespace Dxi\DoctrineEnum\Tests;
+namespace Dxi\DoctrineExtension\Enum\Tests;
 
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Types\Type;
@@ -15,7 +15,7 @@ use MabeEnum\Enum;
 
 /**
  * Class EnumDBALTypeTest
- * @package Dxi\DoctrineEnum\Tests
+ * @package Dxi\DoctrineExtension\Enum\Tests
  */
 class EnumDBALTypeTest extends \PHPUnit_Framework_TestCase
 {
@@ -24,9 +24,9 @@ class EnumDBALTypeTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         try {
-            Type::addType($this->typeName, 'Dxi\DoctrineEnum\Tests\DxiDoctrineEnumTestsDBALMyEnum');
+            Type::addType($this->typeName, 'Dxi\DoctrineExtension\Enum\Tests\DxiDoctrineEnumTestsDBALMyEnum');
         } catch (DBALException $e) {
-            Type::overrideType($this->typeName, 'Dxi\DoctrineEnum\Tests\DxiDoctrineEnumTestsDBALMyEnum');
+            Type::overrideType($this->typeName, 'Dxi\DoctrineExtension\Enum\Tests\DxiDoctrineEnumTestsDBALMyEnum');
         }
     }
 
@@ -40,7 +40,7 @@ class EnumDBALTypeTest extends \PHPUnit_Framework_TestCase
         $type = Type::getType($this->typeName);
 
         $value = $type->convertToPHPValue('one', $platform);
-        $this->assertInstanceOf('Dxi\DoctrineEnum\Tests\MyEnum', $value);
+        $this->assertInstanceOf('Dxi\DoctrineExtension\Enum\Tests\MyEnum', $value);
     }
 
     /**
@@ -81,14 +81,14 @@ class EnumDBALTypeTest extends \PHPUnit_Framework_TestCase
 
 /**
  * Class MyEnum
- * @package Dxi\DoctrineEnum\Tests
+ * @package Dxi\DoctrineExtension\Enum\Tests
  */
 class MyEnum extends Enum {
     const ONE = 'one';
     const TWO = 'two';
 }
 
-class DxiDoctrineEnumTestsDBALMyEnum extends \Dxi\DoctrineEnum\EnumDBALType
+class DxiDoctrineEnumTestsDBALMyEnum extends \Dxi\DoctrineExtension\Enum\EnumDBALType
 {
     public function getName()
     {
@@ -97,6 +97,6 @@ class DxiDoctrineEnumTestsDBALMyEnum extends \Dxi\DoctrineEnum\EnumDBALType
 
     protected function getEnumClass()
     {
-        return 'Dxi\DoctrineEnum\Tests\MyEnum';
+        return 'Dxi\DoctrineExtension\Enum\Tests\MyEnum';
     }
 }

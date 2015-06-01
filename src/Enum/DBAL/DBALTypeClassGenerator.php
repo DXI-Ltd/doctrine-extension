@@ -7,13 +7,13 @@
  * Copyright (C) DXI Ltd
  */
 
-namespace Dxi\DoctrineEnum\DBAL;
+namespace Dxi\DoctrineExtension\Enum\DBAL;
 
-use Dxi\DoctrineEnum\Common\AbstractTypeGenerator;
+use Dxi\DoctrineExtension\Enum\Common\AbstractTypeGenerator;
 
 /**
  * Class DBALTypeClassGenerator
- * @package Dxi\DoctrineEnum\DBAL
+ * @package Dxi\DoctrineExtension\Enum\DBAL
  */
 class DBALTypeClassGenerator extends AbstractTypeGenerator
 {
@@ -21,7 +21,7 @@ class DBALTypeClassGenerator extends AbstractTypeGenerator
 <?php
 namespace %s;
 
-class %s extends \Dxi\DoctrineEnum\EnumDBALType
+class %s extends \Dxi\DoctrineExtension\Enum\EnumDBALType
 {
     /**
      * @return string

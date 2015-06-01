@@ -7,14 +7,14 @@
  * Copyright (C) DXI Ltd
  */
 
-namespace Dxi\DoctrineEnum\DBAL;
+namespace Dxi\DoctrineExtension\Enum\DBAL;
 
 use Doctrine\DBAL\Types\Type;
-use Dxi\DoctrineEnum\Common\AbstractTypeRegistrar;
+use Dxi\DoctrineExtension\Enum\Common\AbstractTypeRegistrar;
 
 /**
  * Class DBALTypeLoader
- * @package Dxi\DoctrineEnum\DBAL
+ * @package Dxi\DoctrineExtension\Enum\DBAL
  */
 class DBALTypeRegistrar extends AbstractTypeRegistrar
 {

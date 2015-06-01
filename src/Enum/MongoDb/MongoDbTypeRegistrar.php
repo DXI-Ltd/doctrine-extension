@@ -7,14 +7,14 @@
  * Copyright (C) DXI Ltd
  */
 
-namespace Dxi\DoctrineEnum\MongoDb;
+namespace Dxi\DoctrineExtension\Enum\MongoDb;
 
 use Doctrine\ODM\MongoDB\Types\Type;
-use Dxi\DoctrineEnum\Common\AbstractTypeRegistrar;
+use Dxi\DoctrineExtension\Enum\Common\AbstractTypeRegistrar;
 
 /**
  * Class MongoDbTypeRegistrar
- * @package Dxi\DoctrineEnum\MongoDb
+ * @package Dxi\DoctrineExtension\Enum\MongoDb
  */
 class MongoDbTypeRegistrar extends AbstractTypeRegistrar
 {

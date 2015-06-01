@@ -7,14 +7,14 @@
  * Copyright (C) DXI Ltd
  */
 
-namespace Dxi\DoctrineEnum;
+namespace Dxi\DoctrineExtension\Enum;
 
 use Doctrine\ODM\MongoDB\Types\Type;
 use MabeEnum\Enum;
 
 /**
  * Class EnumMongoDbType
- * @package Dxi\DoctrineEnum
+ * @package Dxi\DoctrineExtension\Enum
  */
 abstract class EnumMongoDbType extends Type
 {

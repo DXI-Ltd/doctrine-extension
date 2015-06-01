@@ -7,15 +7,15 @@
  * Copyright (C) DXI Ltd
  */
 
-namespace Dxi\DoctrineEnum\Tests\DBAL;
+namespace Dxi\DoctrineExtension\Enum\Tests\DBAL;
 
 use Doctrine\DBAL\Types\Type;
-use Dxi\DoctrineEnum\DBAL\DBALTypeClassGenerator;
+use Dxi\DoctrineExtension\Enum\DBAL\DBALTypeClassGenerator;
 use MabeEnum\Enum;
 
 /**
  * Class DBALTypeClassGeneratorTest
- * @package Dxi\DoctrineEnum\Tests\DBAL
+ * @package Dxi\DoctrineExtension\Enum\Tests\DBAL
  */
 class DBALTypeClassGeneratorTest extends \PHPUnit_Framework_TestCase
 {
@@ -25,13 +25,13 @@ class DBALTypeClassGeneratorTest extends \PHPUnit_Framework_TestCase
     public function shouldGenerateEnumTypeClass()
     {
         $typeName = 'dxi.my_type';
-        $namespace = 'Dxi\DoctrineEnum\\__DBALType';
+        $namespace = 'Dxi\DoctrineExtension\Enum\\__DBALType';
         $dir = sys_get_temp_dir() . '/' . md5(mt_rand(0, 100000).time());
         $generator = new DBALTypeClassGenerator($dir, $namespace);
 
-        list($className, $file) = $generator->generateTypeClass($typeName, 'Dxi\DoctrineEnum\Tests\DBAL\MyEnum');
+        list($className, $file) = $generator->generateTypeClass($typeName, 'Dxi\DoctrineExtension\Enum\Tests\DBAL\MyEnum');
         $this->assertFileExists($file);
-        $this->assertEquals('Dxi\DoctrineEnum\\__DBALType\\DxiDoctrineEnumTestsDBALMyEnum', $className);
+        $this->assertEquals('Dxi\DoctrineExtension\Enum\\__DBALType\\DxiDoctrineExtensionEnumTestsDBALMyEnum', $className);
         require $file;
 
         $this->assertTrue(class_exists($className));

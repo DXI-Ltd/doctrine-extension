@@ -7,13 +7,13 @@
  * Copyright (C) DXI Ltd
  */
 
-namespace Dxi\DoctrineEnum\Common;
+namespace Dxi\DoctrineExtension\Enum\Common;
 
-use Dxi\DoctrineEnum\Exception\InvalidEnumClassException;
+use Dxi\DoctrineExtension\Enum\Exception\InvalidEnumClassException;
 
 /**
  * Class DBALTypeLoader
- * @package Dxi\DoctrineEnum\DBAL
+ * @package Dxi\DoctrineExtension\Enum\DBAL
  */
 abstract class AbstractTypeRegistrar
 {

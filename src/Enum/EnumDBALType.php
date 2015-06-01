@@ -7,16 +7,16 @@
  * Copyright (C) DXI Ltd
  */
 
-namespace Dxi\DoctrineEnum;
+namespace Dxi\DoctrineExtension\Enum;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
-use Dxi\DoctrineEnum\Exception\InvalidEnumValueException;
+use Dxi\DoctrineExtension\Enum\Exception\InvalidEnumValueException;
 use MabeEnum\Enum;
 
 /**
  * Class EnumDBALType
- * @package Dxi\DoctrineEnum
+ * @package Dxi\DoctrineExtension\Enum
  */
 abstract class EnumDBALType extends Type
 {

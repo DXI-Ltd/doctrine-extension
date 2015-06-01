@@ -7,7 +7,7 @@
  * Copyright (C) DXI Ltd
  */
 
-namespace Dxi\DoctrineEnum\Tests;
+namespace Dxi\DoctrineExtension\Enum\Tests;
 
 use Doctrine\ODM\MongoDB\Mapping\MappingException;
 use Doctrine\ODM\MongoDB\Types\Type;
@@ -15,7 +15,7 @@ use MabeEnum\Enum;
 
 /**
  * Class MongoDbTypeTest
- * @package Dxi\DoctrineEnum\Tests
+ * @package Dxi\DoctrineExtension\Enum\Tests
  */
 class EnumMongoDbTypeTest extends \PHPUnit_Framework_TestCase
 {
@@ -24,9 +24,9 @@ class EnumMongoDbTypeTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         try {
-            Type::addType($this->typeName, 'Dxi\DoctrineEnum\Tests\DxiDoctrineEnumTestsMyMongoEnum');
+            Type::addType($this->typeName, 'Dxi\DoctrineExtension\Enum\Tests\DxiDoctrineEnumTestsMyMongoEnum');
         } catch (MappingException $e) {
-            Type::overrideType($this->typeName, 'Dxi\DoctrineEnum\Tests\DxiDoctrineEnumTestsMyMongoEnum');
+            Type::overrideType($this->typeName, 'Dxi\DoctrineExtension\Enum\Tests\DxiDoctrineEnumTestsMyMongoEnum');
         }
     }
 
@@ -38,7 +38,7 @@ class EnumMongoDbTypeTest extends \PHPUnit_Framework_TestCase
         $type = Type::getType($this->typeName);
 
         $value = $type->convertToPHPValue('one');
-        $this->assertInstanceOf('Dxi\DoctrineEnum\Tests\MyMongoEnum', $value);
+        $this->assertInstanceOf('Dxi\DoctrineExtension\Enum\Tests\MyMongoEnum', $value);
     }
 
     /**
@@ -69,14 +69,14 @@ class EnumMongoDbTypeTest extends \PHPUnit_Framework_TestCase
 
 /**
  * Class MyEnum
- * @package Dxi\DoctrineEnum\Tests
+ * @package Dxi\DoctrineExtension\Enum\Tests
  */
 class MyMongoEnum extends Enum {
     const ONE = 'one';
     const TWO = 'two';
 }
 
-class DxiDoctrineEnumTestsMyMongoEnum extends \Dxi\DoctrineEnum\EnumMongoDbType
+class DxiDoctrineEnumTestsMyMongoEnum extends \Dxi\DoctrineExtension\Enum\EnumMongoDbType
 {
     public function getName()
     {
@@ -85,6 +85,6 @@ class DxiDoctrineEnumTestsMyMongoEnum extends \Dxi\DoctrineEnum\EnumMongoDbType
 
     protected function getEnumClass()
     {
-        return 'Dxi\DoctrineEnum\Tests\MyMongoEnum';
+        return 'Dxi\DoctrineExtension\Enum\Tests\MyMongoEnum';
     }
 }

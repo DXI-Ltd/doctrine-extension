@@ -1,7 +1,7 @@
 {
-  "name": "dxi/doctrine-enum",
+  "name": "dxi/doctrine-extension",
   "type": "library",
-  "description": "DXI Doctrine Enum DBAL / ODM Type support",
+  "description": "DXI Doctrine Extensions",
   "keywords": ["enum", "doctrine", "mapping", "orm", "odm", "php-enum"],
   "licence": "MIT",
   "authors": [
@@ -11,20 +11,24 @@
     }
   ],
   "require": {
-    "php": ">=5.3.3",
-    "marc-mabe/php-enum": "~2.0"
+    "php": ">=5.3.3"
   },
   "require-dev": {
     "doctrine/dbal": "~2.4",
+    "gedmo/doctrine-extensions": "~2.4",
+    "doctrine/orm": "~2.4",
     "doctrine/mongodb-odm": "~1.0",
+    "marc-mabe/php-enum": "~2.0",
     "phpunit/phpunit": "~4@stable"
   },
   "autoload": {
     "psr-4": {
-      "Dxi\\DoctrineEnum\\": "src/"
+      "Dxi\\DoctrineExtension\\": "src/"
     }
   },
   "suggest": {
+    "marc-mabe/php-enum": "To support Enum Extension",
+    "gedmo/doctrine-extensions:": "To support Reference Extension",
     "doctrine/dbal": "To support DBAL Type",
     "doctrine/mongodb-odm": "To support MongoDB ODM Type"
   },

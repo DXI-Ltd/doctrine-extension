@@ -7,11 +7,11 @@
  * Copyright (C) DXI Ltd
  */
 
-namespace Dxi\DoctrineEnum\Exception;
+namespace Dxi\DoctrineExtension\Enum\Exception;
 
 /**
  * Class InvalidEnumValueException
- * @package Dxi\DoctrineEnum\Exception
+ * @package Dxi\DoctrineExtension\Enum\Exception
  */
 class InvalidEnumValueException extends \InvalidArgumentException
 {

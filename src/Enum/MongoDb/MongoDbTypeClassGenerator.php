@@ -7,13 +7,13 @@
  * Copyright (C) DXI Ltd
  */
 
-namespace Dxi\DoctrineEnum\MongoDb;
+namespace Dxi\DoctrineExtension\Enum\MongoDb;
 
-use Dxi\DoctrineEnum\Common\AbstractTypeGenerator;
+use Dxi\DoctrineExtension\Enum\Common\AbstractTypeGenerator;
 
 /**
  * Class MongoDbTypeClassGenerator
- * @package Dxi\DoctrineEnum\MongoDb
+ * @package Dxi\DoctrineExtension\Enum\MongoDb
  */
 class MongoDbTypeClassGenerator extends AbstractTypeGenerator
 {
@@ -21,7 +21,7 @@ class MongoDbTypeClassGenerator extends AbstractTypeGenerator
 <?php
 namespace %s;
 
-class %s extends \Dxi\DoctrineEnum\EnumMongoDbType
+class %s extends \Dxi\DoctrineExtension\Enum\EnumMongoDbType
 {
     /**
      * @return string

@@ -1,22 +1,24 @@
-# DXI Doctrine ENUM
+# DXI Doctrine Extension
 
-This library provides convenient way to create Doctrine Mapping Types from your Enum Types.
-For now, only ***marc-mabe/php-enum*** is supported (see https://github.com/marc-mabe/php-enum).
+Doctrine 2 extensions
 
 ## Installation
 
-Add the **dxi/doctrine-enum** into **composer.json**
+Add the **dxi/doctrine-extension** into **composer.json**
 
 ```json
 {
     "require": {
         "php":              ">=5.3.2",
-        "dxi/doctrine-enum": "~1.0"
+        "dxi/doctrine-extension": "~1.0"
     }
 }
 ```
 
-## Usage
+## Enum Extension
+
+This Extension provides convenient way to create Doctrine Mapping Types from your Enum Types.
+For now, only ***marc-mabe/php-enum*** is supported (see https://github.com/marc-mabe/php-enum).
 
 *  Create your Enum Type
  
@@ -64,8 +66,8 @@ class MyEntity
 
 *  Register your type with DBAL
 ```php
-use Dxi\DoctrineEnum\DBAL\DBALTypeRegistrar;
-use Dxi\DoctrineEnum\DBAL\DBALTypeClassGenerator;
+use Dxi\DoctrineExtension\Enum\DBAL\DBALTypeRegistrar;
+use Dxi\DoctrineExtension\Enum\DBAL\DBALTypeClassGenerator;
 
 $targetDir = './enum-db-types';
 $typeNamespace = 'My\Enum\DBALTypes';
@@ -79,8 +81,8 @@ Notice: Field mapped as ***my_enum_type*** creates column type "VARCHAR" (32 len
 
 *  Register your type with MongoDB
 ```php
-use Dxi\DoctrineEnum\DBAL\DBALTypeRegistrar;
-use Dxi\DoctrineEnum\DBAL\DBALTypeClassGenerator;
+use Dxi\DoctrineExtension\Enum\DBAL\DBALTypeRegistrar;
+use Dxi\DoctrineExtension\Enum\DBAL\DBALTypeClassGenerator;
 
 $targetDir = './enum-mongo-types';
 $typeNamespace = 'My\Enum\MongoDbTypes';
@@ -90,3 +92,9 @@ $registrar->registerType('my_enum_type', '\MyEnum');
 ```
 Now you can use ***my_enum_type*** for your Doctrine MongoDB ODM mappings
 (see [http://docs.doctrine-project.org/projects/doctrine-mongodb-odm/en/latest/reference/basic-mapping.html#custom-mapping-types](http://docs.doctrine-project.org/projects/doctrine-mongodb-odm/en/latest/reference/basic-mapping.html#custom-mapping-types "DoctrineMongoDbODM Custom Mapping Type"))
+
+## Reference Extension
+
+It's a fork of the Gedmo/References extension. See [https://github.com/Atlantic18/DoctrineExtensions/blob/master/doc/references.md](https://github.com/Atlantic18/DoctrineExtensions/blob/master/doc/references.md "Gedmo/References extension")
+It provides multi registry support and XML/YML mapping drivers.
+Note, this Extension will be removed, when it become part of Gedmo Doctrine Extension project (see [https://github.com/Atlantic18/DoctrineExtensions/pull/1320](https://github.com/Atlantic18/DoctrineExtensions/pull/1320))

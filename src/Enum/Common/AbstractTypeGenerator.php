@@ -7,11 +7,11 @@
  * Copyright (C) DXI Ltd
  */
 
-namespace Dxi\DoctrineEnum\Common;
+namespace Dxi\DoctrineExtension\Enum\Common;
 
 /**
  * Class AbstractTypeGenerator
- * @package Dxi\DoctrineEnum\Generator
+ * @package Dxi\DoctrineExtension\Enum\Generator
  */
 abstract class AbstractTypeGenerator
 {
