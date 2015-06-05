@@ -24,6 +24,11 @@ class DBALTypeRegistrar extends AbstractTypeRegistrar
      */
     protected function addDoctrineType($typeName, $typeClass)
     {
+        if (Type::hasType($typeName)) {
+            Type::overrideType($typeName, $typeClass);
+            return;
+        }
+
         Type::addType($typeName, $typeClass);
     }
 }
