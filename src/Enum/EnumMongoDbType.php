@@ -62,7 +62,7 @@ abstract class EnumMongoDbType extends Type
 
     public function closureToPHP()
     {
-        return 'if ($value === null) { $return = null; } else { $callback = $this->getEnumClass()\.\'::get\'; call_user_func($callback, $value);}';
+        return 'if ($value === null) { $return = null; } else { $callback = $this->getEnumClass().\'::get\'; $return = call_user_func($callback, $value);}';
     }
 
     /**
