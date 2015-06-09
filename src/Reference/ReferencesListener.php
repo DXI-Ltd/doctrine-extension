@@ -199,7 +199,7 @@ class ReferencesListener extends MappedEventSubscriber
             $property->setAccessible(true);
 
             $id = $ea->extractIdentifier($om, $object);
-            $manager = $this->getManager('document', $mapping['class']);
+            $manager = $this->getManager(RegistryTypes::MONGODB_ODM, $mapping['class']);
 
             $class = $mapping['class'];
             $refMeta = $manager->getClassMetadata($class);
