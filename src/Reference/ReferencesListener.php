@@ -147,11 +147,9 @@ class ReferencesListener extends MappedEventSubscriber
             }
         }
 
-        if (!$manager) {
-            throw new RuntimeException(
-                sprintf('Could not find Manager type "%s" for class "%s".', $type, $class)
-            );
-        }
+        throw new RuntimeException(
+            sprintf('Could not find Manager type "%s" for class "%s".', $type, $class)
+        );
     }
 
     protected function getNamespace()
