@@ -49,7 +49,7 @@ abstract class AbstractTypeGenerator
 
         if (! is_file($filename)) {
             if (! is_dir($this->typesDir)) {
-                @mkdir($this->typesDir, 755, true);
+                @mkdir($this->typesDir, 0755, true);
             }
 
             $typeCode = $this->generateClassCode($className, $enumClass, $typeName);
