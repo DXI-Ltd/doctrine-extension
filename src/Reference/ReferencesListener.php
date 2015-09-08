@@ -5,6 +5,7 @@ namespace Dxi\DoctrineExtension\Reference;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\EventArgs;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\ObjectManager;
 use Gedmo\Exception\RuntimeException;
 use Gedmo\Mapping\MappedEventSubscriber;
@@ -48,12 +49,14 @@ class ReferencesListener extends MappedEventSubscriber
             $property = $meta->reflClass->getProperty($mapping['field']);
             $property->setAccessible(true);
             if (isset($mapping['identifier'])) {
-                $referencedObjectId = $meta->getFieldValue($object, $mapping['identifier']);
-                if (null !== $referencedObjectId) {
+                $manager = $this->getManager($mapping['type'], $mapping['class']);
+
+                $referencedObjectId = $this->getReferencedObjectId($manager, $mapping, $object, $meta);
+                if ($referencedObjectId) {
                     $property->setValue(
                         $object,
                         $ea->getSingleReference(
-                            $this->getManager($mapping['type'], $mapping['class']),
+                            $manager,
                             $mapping['class'],
                             $referencedObjectId
                         )
@@ -220,5 +223,28 @@ class ReferencesListener extends MappedEventSubscriber
                 )
             );
         }
+    }
+
+    private function getReferencedObjectId(ObjectManager $manager, array $mapping, $object, ClassMetadata $meta)
+    {
+        $identifierFields = explode(',', $mapping['identifier']);
+        if (count($identifierFields) > 1) {
+            $refMeta = $manager->getClassMetadata($mapping['class']);
+            $refIdentifierFields = $refMeta->getIdentifierFieldNames();
+
+            $referencedObjectId = array();
+            foreach ($identifierFields as $i => $identifierField) {
+                $id = $meta->getFieldValue($object, $identifierField);
+                if ($id === null) {
+                    return null;
+                }
+
+                $referencedObjectId[$refIdentifierFields[$i]] = $id;
+            }
+
+            return $referencedObjectId;
+        }
+
+        return $meta->getFieldValue($object, $mapping['identifier']);
     }
 }
