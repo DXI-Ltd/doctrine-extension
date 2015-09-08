@@ -18,6 +18,8 @@ use Gedmo\Mapping\Driver\Xml as BaseXml;
  */
 class Xml extends BaseXml
 {
+    const DXI_NAMESPACE = 'http://dxi.eu/schemas/doctrine-extension-mapping';
+
     private static $referenceTypes = array(
         'referenceOne' => 'reference-one',
         'referenceMany' => 'reference-many',
@@ -39,7 +41,7 @@ class Xml extends BaseXml
          * @var \SimpleXmlElement $mapping
          */
         $mapping = $this->_getMapping($meta->name);
-        $gedmoMapping = $mapping->children(self::GEDMO_NAMESPACE_URI);
+        $gedmoMapping = $mapping->children(self::DXI_NAMESPACE);
 
         foreach (self::$referenceTypes as $type => $tagName) {
             $config[$type] = array();
