@@ -2,6 +2,7 @@
 
 namespace Dxi\DoctrineExtension\Reference\Mapping\Event\Adapter;
 
+use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Proxy\Proxy as MongoDBProxy;
 use Doctrine\ORM\EntityManager;
@@ -88,7 +89,7 @@ final class ORM extends BaseAdapterORM implements ReferencesAdapter
     /**
      * Override so we don't get an exception. We want to allow this.
      */
-    private function throwIfNotDocumentManager(DocumentManager $dm)
+    private function throwIfNotDocumentManager(ObjectManager $dm)
     {
     }
 }
