@@ -225,6 +225,13 @@ class ReferencesListener extends MappedEventSubscriber
         }
     }
 
+    /**
+     * @param ObjectManager $manager
+     * @param array $mapping
+     * @param $object
+     * @param ClassMetadata $meta
+     * @return array|mixed|null
+     */
     private function getReferencedObjectId(ObjectManager $manager, array $mapping, $object, ClassMetadata $meta)
     {
         $identifierFields = explode(',', $mapping['identifier']);
