@@ -18,7 +18,7 @@ use Gedmo\Mapping\Driver\Xml as BaseXml;
  */
 class Xml extends BaseXml
 {
-    const DXI_NAMESPACE = 'http://dxi.eu/schemas/doctrine-extension-mapping';
+    const DXI_NAMESPACE = 'http://www.dxi.eu/schemas/doctrine-extension-mapping';
 
     private static $referenceTypes = array(
         'referenceOne' => 'reference-one',

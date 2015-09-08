@@ -1,4 +1,4 @@
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dxi="http://dxi.eu/schemas/doctrine-extension-mapping" targetNamespace="http://dxi.eu/schemas/doctrine-extension-mapping" elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dxi="http://www.dxi.eu/schemas/doctrine-extension-mapping" targetNamespace="http://www.dxi.eu/schemas/doctrine-extension-mapping" elementFormDefault="qualified">
     <xs:annotation>
         <xs:documentation>
             <![CDATA[
