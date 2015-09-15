@@ -51,7 +51,7 @@ class ReferencesListener extends MappedEventSubscriber
             if (isset($mapping['identifier'])) {
                 $manager = $this->getManager($mapping['type'], $mapping['class']);
 
-                $referencedObjectId = $this->getReferencedObjectId($manager, $mapping, $object, $meta);
+                $referencedObjectId = $this->getReferencedObjectId($config, $mapping, $object, $meta);
                 if ($referencedObjectId) {
                     $property->setValue(
                         $object,
@@ -172,7 +172,12 @@ class ReferencesListener extends MappedEventSubscriber
                 $property = $meta->reflClass->getProperty($mapping['field']);
                 $property->setAccessible(true);
                 $referencedObject = $property->getValue($object);
-                if (is_object($referencedObject)) {
+                if (! is_object($referencedObject)) {
+                    continue;
+                }
+
+                $identifierFields = explode(',', $mapping['identifier']);
+                if (count($identifierFields) == 1) {
                     $meta->setFieldValue(
                         $object,
                         $mapping['identifier'],
@@ -181,6 +186,32 @@ class ReferencesListener extends MappedEventSubscriber
                             $referencedObject
                         )
                     );
+                    continue;
+                }
+
+                // composite key reference
+                $id = $ea->getIdentifier(
+                    $this->getManager($mapping['type'], $mapping['class']),
+                    $referencedObject,
+                    false
+                );
+
+                foreach($identifierFields as $idField) {
+                    if ($meta->hasField($idField)) {
+                        $meta->setFieldValue(
+                            $object,
+                            $idField,
+                            $id[$idField]
+                        );
+                    } else {
+                        $referenceDefinition = $this->getReferenceDefinition($config, $idField);
+                        $referenceIdField = $referenceDefinition['identifier'];
+                        $meta->setFieldValue($object, $referenceIdField, $ea->getIdentifier(
+                            $this->getManager($referenceDefinition['type'], $referenceDefinition['class']),
+                            $referencedObject,
+                            true
+                        ));
+                    }
                 }
             }
         }
@@ -232,26 +263,40 @@ class ReferencesListener extends MappedEventSubscriber
      * @param ClassMetadata $meta
      * @return array|mixed|null
      */
-    private function getReferencedObjectId(ObjectManager $manager, array $mapping, $object, ClassMetadata $meta)
+    private function getReferencedObjectId(array $config, array $mapping, $object, ClassMetadata $meta)
     {
         $identifierFields = explode(',', $mapping['identifier']);
         if (count($identifierFields) > 1) {
-            $refMeta = $manager->getClassMetadata($mapping['class']);
-            $refIdentifierFields = $refMeta->getIdentifierFieldNames();
-
             $referencedObjectId = array();
             foreach ($identifierFields as $i => $identifierField) {
-                $id = $meta->getFieldValue($object, $identifierField);
+                if (! $meta->hasField($identifierField)) {
+                    $referenceDef = $this->getReferenceDefinition($config, $identifierField);
+                    $id = $meta->getFieldValue($object, $referenceDef['identifier']);
+                    $referencedObjectId[$identifierField] = $id;
+                } else {
+                    $id = $meta->getFieldValue($object, $identifierField);
+                    $referencedObjectId[$identifierField] = $id;
+                }
+
                 if ($id === null) {
                     return null;
                 }
-
-                $referencedObjectId[$refIdentifierFields[$i]] = $id;
             }
 
             return $referencedObjectId;
         }
 
         return $meta->getFieldValue($object, $mapping['identifier']);
+    }
+
+    private function getReferenceDefinition(array $config, $idField)
+    {
+        foreach ($config['referenceOne'] as $def) {
+            if ($def['field'] == $idField) {
+                return $def;
+            }
+        }
+
+        throw new \Exception(sprintf('Can not find a reference definition for ID field "%s"', $idField));
     }
 }
