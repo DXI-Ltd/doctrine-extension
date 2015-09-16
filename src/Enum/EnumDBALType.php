@@ -83,10 +83,15 @@ abstract class EnumDBALType extends Type
      */
     private function getEnum($value)
     {
-        try {
-            return call_user_func(sprintf('%s::get', $this->getEnumClass()), $value);
-        } catch (\Exception $e) {
-            throw new InvalidEnumValueException(sprintf('Enum with value "%s" can not be found.', $value));
+        $enumClass = $this->getEnumClass();
+        foreach ($enumClass::getEnumerators() as $enum) {
+            if ($enum->getValue() == $value) {
+                return $enum;
+            }
         }
+
+        throw new InvalidEnumValueException(
+            sprintf('Could not find Enum of type "%s" with value "%s"', "$enumClass", $value)
+        );
     }
 }
