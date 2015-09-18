@@ -63,7 +63,35 @@ abstract class EnumMongoDbType extends Type
     public function closureToPHP()
     {
         $enumClass = $this->getEnumClass();
-        return 'if ($value === null) { $return = null; } else { $callback = \''.$enumClass.'::get\'; $return = call_user_func($callback, $value);}';
+        return <<<"FUNC"
+        if (\$value === null) {
+            \$return = null;
+        } else {
+            \$callback = function (\$value) {
+                foreach (\\$enumClass::getEnumerators() as \$enum) {
+                    if (\$enum->getValue() == \$value) {
+                        return \$enum;
+                    }
+                }
+                throw new \Dxi\DoctrineExtension\Enum\Exception\InvalidEnumValueException(
+                    sprintf('Could not find Enum of type "%s" with value "%s"', "$enumClass", \$value)
+                );
+            };
+            \$return = call_user_func(\$callback, \$value);
+        };
+FUNC;
+    }
+
+    private function getEnumFnc($enumClass, $value)
+    {
+        $enums = call_user_func("$enumClass::getEnumerators");
+        foreach ($enums as $key => $enum) {
+            if ($key == $value) {
+                return $enum;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -72,6 +100,15 @@ abstract class EnumMongoDbType extends Type
      */
     private function getEnum($value)
     {
-        return call_user_func(sprintf('%s::get', $this->getEnumClass()), $value);
+        $enumClass = $this->getEnumClass();
+        foreach ($enumClass::getEnumerators() as $enum) {
+            if ($enum->getValue() == $value) {
+                return $enum;
+            }
+        }
+
+        throw new \Dxi\DoctrineExtension\Enum\Exception\InvalidEnumValueException(
+            sprintf('Could not find Enum of type "%s" with value "%s"', "$enumClass", $value)
+        );
     }
 }
