@@ -208,7 +208,7 @@ class ReferencesListener extends MappedEventSubscriber
                         $referenceIdField = $referenceDefinition['identifier'];
                         $meta->setFieldValue($object, $referenceIdField, $ea->getIdentifier(
                             $this->getManager($referenceDefinition['type'], $referenceDefinition['class']),
-                            $referencedObject,
+                            $id[$idField],
                             true
                         ));
                     }
