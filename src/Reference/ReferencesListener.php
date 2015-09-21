@@ -206,11 +206,18 @@ class ReferencesListener extends MappedEventSubscriber
                     } else {
                         $referenceDefinition = $this->getReferenceDefinition($config, $idField);
                         $referenceIdField = $referenceDefinition['identifier'];
-                        $meta->setFieldValue($object, $referenceIdField, $ea->getIdentifier(
+
+                        $referencedObjectProperty = $meta->getReflectionClass()->getProperty($referenceDefinition['field']);
+                        $referencedObjectProperty->setAccessible(true);
+
+                        $referencedObject = $referencedObjectProperty->getValue($object);
+                        $referencedObjectId = $referencedObject ? $ea->getIdentifier(
                             $this->getManager($referenceDefinition['type'], $referenceDefinition['class']),
-                            $id[$idField],
+                            $referencedObject,
                             true
-                        ));
+                        ) : null;
+
+                        $meta->setFieldValue($object, $referenceIdField, $referencedObjectId);
                     }
                 }
             }
