@@ -8,6 +8,7 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\ObjectManager;
 use Gedmo\Exception\RuntimeException;
+use Gedmo\Mapping\Event\AdapterInterface;
 use Gedmo\Mapping\MappedEventSubscriber;
 
 /**
@@ -181,20 +182,13 @@ class ReferencesListener extends MappedEventSubscriber
                     $meta->setFieldValue(
                         $object,
                         $mapping['identifier'],
-                        $ea->getIdentifier(
-                            $this->getManager($mapping['type'], $mapping['class']),
-                            $referencedObject
-                        )
+                        $this->getIdentifier($ea, $mapping, $referencedObject)
                     );
                     continue;
                 }
 
                 // composite key reference
-                $id = $ea->getIdentifier(
-                    $this->getManager($mapping['type'], $mapping['class']),
-                    $referencedObject,
-                    false
-                );
+                $id = $this->getIdentifier($ea, $mapping, $referencedObject, false);
 
                 foreach($identifierFields as $idField) {
                     if ($meta->hasField($idField)) {
@@ -211,11 +205,7 @@ class ReferencesListener extends MappedEventSubscriber
                         $referencedObjectProperty->setAccessible(true);
 
                         $referencedObject = $referencedObjectProperty->getValue($object);
-                        $referencedObjectId = $referencedObject ? $ea->getIdentifier(
-                            $this->getManager($referenceDefinition['type'], $referenceDefinition['class']),
-                            $referencedObject,
-                            true
-                        ) : null;
+                        $referencedObjectId = $referencedObject ? $this->getIdentifier($ea, $referenceDefinition, $referencedObject, true) : null;
 
                         $meta->setFieldValue($object, $referenceIdField, $referencedObjectId);
                     }
@@ -305,5 +295,27 @@ class ReferencesListener extends MappedEventSubscriber
         }
 
         throw new \Exception(sprintf('Can not find a reference definition for ID field "%s"', $idField));
+    }
+
+    /**
+     * @param AdapterInterface $ea
+     * @param array $mapping
+     * @param $referencedObject
+     * @param bool $single
+     * @return mixed
+     */
+    private function getIdentifier(AdapterInterface $ea, array $mapping, $referencedObject, $single = true)
+    {
+        $id = $ea->getIdentifier(
+            $this->getManager($mapping['type'], $mapping['class']),
+            $referencedObject,
+            $single
+        );
+
+        if (is_scalar($id)) {
+            return $id;
+        }
+
+        return $this->getIdentifier($ea, $mapping, $id, $single);
     }
 }
