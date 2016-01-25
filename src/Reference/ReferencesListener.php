@@ -26,9 +26,15 @@ class ReferencesListener extends MappedEventSubscriber
      */
     private $registries;
 
+    /**
+     * @var
+     */
+    private $idResolver;
+
     public function __construct(array $registries = array())
     {
         $this->registries = $registries;
+        $this->idResolver = new IdentityResolver();
     }
 
     public function loadClassMetadata(EventArgs $eventArgs)
@@ -254,11 +260,12 @@ class ReferencesListener extends MappedEventSubscriber
     }
 
     /**
-     * @param ObjectManager $manager
+     * @param array $config
      * @param array $mapping
      * @param $object
      * @param ClassMetadata $meta
      * @return array|mixed|null
+     * @throws \Exception
      */
     private function getReferencedObjectId(array $config, array $mapping, $object, ClassMetadata $meta)
     {
@@ -306,16 +313,11 @@ class ReferencesListener extends MappedEventSubscriber
      */
     private function getIdentifier(AdapterInterface $ea, array $mapping, $referencedObject, $single = true)
     {
-        $id = $ea->getIdentifier(
+        return $this->idResolver->resolveIdentity(
+            $ea,
             $this->getManager($mapping['type'], $mapping['class']),
             $referencedObject,
             $single
         );
-
-        if (is_scalar($id)) {
-            return $id;
-        }
-
-        return $this->getIdentifier($ea, $mapping, $id, $single);
     }
 }

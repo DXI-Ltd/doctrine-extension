@@ -19,7 +19,8 @@
         "doctrine/orm": "~2.3",
         "doctrine/mongodb-odm": "~1.0",
         "marc-mabe/php-enum": "~2.0",
-        "phpunit/phpunit": "~4@stable"
+        "phpunit/phpunit": "~4@stable",
+        "mockery/mockery": "*"
     },
     "autoload": {
         "psr-4": {
