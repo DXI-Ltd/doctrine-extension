@@ -23,7 +23,7 @@ abstract class AbstractTypeGenerator
     /**
      * @var string
      */
-    protected $typeNamespace;
+    protected $typesNamespace;
 
     /**
      * @param $typesDir
